@@ -1,0 +1,22 @@
+[build-system]
+requires = ["hatchling >= 1.26"]
+build-backend = "hatchling.build"
+[project]
+name = "AzuraLang"
+version = "0.1"
+authors = [
+  { name="Zhan2os1ks", email="zhan2os1ks@duck.com" },
+]
+description = "A librery for making ttk apps."
+readme = "README.md"
+requires-python = ">=3.11"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Operating System :: OS Independent",
+]
+license = "GPL-3.0-only
+license-files = ["LICEN[CS]E*"]
+
+[project.urls]
+Homepage = "https://azuracorp.github.io/AzuraLang"
+Issues = "https://github.com/AzuraCorp/AzuraLang/issues"

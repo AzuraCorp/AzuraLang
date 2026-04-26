@@ -27,7 +27,13 @@ apt install python-azuralang
 >[!NOTE]
 >This way you'll get all the new features asap, but some distribution/versions/commits have bugs or aren't stable to    use normally - so be carefull!
 
-#### Building(inclusive PreReleases)
+#### Building(inclusive Betas and Alphas, f. e.: vBETA-1, vF-10 and vPreREL-3)
 >[!WARNING]
->Windows/OSX compatabillity not tested!
+>Currently, we don't support Windows/OSX for building the core files! 
+>We reccomend to use Arch(Manjaro), because of untested Ubuntu-, Debian- and RPM-based system-behaving!
 
+1. Clone the repo: `git clone https://github.com/AzuraCorp/AzuraLang/tree/main`
+2. Enter the folder: `cd AzuraLang`
+3. Build! `bash build.bash` or `sh build.bash`
+
+#### Use the builded files(only PreReleases and Full versions, f. e.: vPreREL-3 and vF-10)
