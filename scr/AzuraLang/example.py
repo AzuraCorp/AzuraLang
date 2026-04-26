@@ -37,7 +37,7 @@ def label(inWinName, text="label"):
         reporterror(code="0x01", message=f"Window '{inWinName}' not found!")
 
 # Make the button widget
-def button(inWinName, text="button", command=print('Hello, World!')):
+def button(inWinName, text="button", command=lambda: print('Hello, World!')):
     # Pull the actual window object from our dictionary
     parent = windows.get(inWinName)
     if parent:
@@ -46,6 +46,9 @@ def button(inWinName, text="button", command=print('Hello, World!')):
         return btn
     else:
         reporterror(code="0x01", message=f"Window '{inWinName}' not found!")
+
+window("a")
+button("a")
 
 #init the stuff
 if __name__ == "__main__":
@@ -60,9 +63,8 @@ if __name__ == "__main__":
     # sys.argv[0] is the script name, so we start at index 1
     args = sys.argv[1:]
 
-    if args = "-t" or "--test":
+    if args == "-t" or "--test":
         window("aaa")
         label("aaa", text="testlabel")
-        button("aaa", text="Click!" command=print("TEST! BUTTON CLICKED!"))
+        button("aaa", text="Click!", command=lambda: print("TEST! BUTTON CLICKED!"))
 
-    name = args[0]
