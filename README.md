@@ -24,10 +24,10 @@ apt upgrade && apt update
 apt install python-azuralang
 ```
 ### ADaC(AllDistributions and Commits) channel
->[NOTE]
+>[!NOTE]
 >This way you'll get all the new features asap, but some distribution/versions/commits have bugs or aren't stable to    use normally - so be carefull!
 
 #### Building(inclusive PreReleases)
->[WARNING]
+>[!WARNING]
 >Windows/OSX compatabillity not tested!
 
