@@ -3,6 +3,7 @@ from tkinter import Tk
 import sys
 import os
 from colorama import Fore, Style
+import pytoml
 
 # Initialize colorama
 import colorama
@@ -47,11 +48,8 @@ def button(inWinName, text="button", command=lambda: print('Hello, World!')):
     else:
         reporterror(code="0x01", message=f"Window '{inWinName}' not found!")
 
-window("a")
-button("a")
-
-#init the stuff
-if __name__ == "__main__":
+# Define run at the top level so it can be imported!
+def run():
     if windows:
         # This grabs the actual window object of the first entry
         first_name = list(windows.keys())[0]
@@ -60,6 +58,9 @@ if __name__ == "__main__":
     else:
         reporterror(code="0x00", message="No windows existing!")
 
+# init the stuff
+if __name__ == "__main__":
+
     # sys.argv[0] is the script name, so we start at index 1
     args = sys.argv[1:]
 
@@ -67,4 +68,8 @@ if __name__ == "__main__":
         window("aaa")
         label("aaa", text="testlabel")
         button("aaa", text="Click!", command=lambda: print("TEST! BUTTON CLICKED!"))
+	elif args == "-h" or "--help":
+		print("		AzuraLang help\n azuralang [command] <value> or")
+		print("\nazuralang")
 
+	run()
