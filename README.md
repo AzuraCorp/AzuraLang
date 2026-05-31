@@ -12,7 +12,7 @@ It is a high-level library, that is really easy to use, mod and contribute.
 
 ### Stable releases:
 
-#### Normally to install Azuralang you can use pip:
+#### Normally, to install Azuralang you can use pip:
 
 ```bash
 pip install azuralang
@@ -22,19 +22,6 @@ pip install azuralang
 
 ```bash
 pip install azuralang --break-system-packages
-```
-
-or(Arch linux, not tested)
-
-```bash
-pacman -Suy python-azuralang
-```
-
-or(Ubuntu/Debian, also not tested)
-
-```bash
-apt upgrade && apt update
-apt install python-azuralang
 ```
 
 ### ADaC Channel(AllDistributions and Commits channel)
@@ -60,8 +47,7 @@ apt install python-azuralang
 
 ## Wanna join/help?
 
-###### If you want to join/help me, write an e-mail to 'zhan2os1ks@duck.com' to    get my attention.
+##### If you want to join/help me, write an e-mail to 'zhan2os1ks@duck.com' to    get my attention.
 
-###### E-Mail examle: "Hi Zhan! I wanna join you, my github username is 123example.    123example"
+##### E-Mail examle: "Hi Zhan! I wanna join you, my github username is 123example.    123example"
 
-- [ ] 
