@@ -48,6 +48,9 @@ def button(inWinName, text="button", command=lambda: print('Hello, World!')):
     else:
         reporterror(code="0x01", message=f"Window '{inWinName}' not found!")
 
+# Make an input widget(guiInput())
+def guiInput(inWinName, text="...", type="sline", )
+
 # Define run at the top level so it can be imported!
 def run():
     if windows:

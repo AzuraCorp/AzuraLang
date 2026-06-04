@@ -7,12 +7,12 @@ on:
 jobs:
   build-and-publish:
     name: Build and publish Python distribution
-    runs-on: ubuntu-latest
+    runs-on: arch-latest
     
     # Binds this job to the GitHub environment rules you configured
     environment:
       name: pypi
-      url: https://pypi.org/p/YOUR-PACKAGE-NAME # Optional: replace with your package URL
+      url: https://pypi.org/p/AzuraLang # Optional: replace with your package URL
 
     # Permissions required to fetch the secure OIDC identity token from GitHub
     permissions:
