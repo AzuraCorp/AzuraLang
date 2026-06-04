@@ -1,5 +1,5 @@
 from tkinter import ttk as t
-from tkinter import Tk
+from ttkthemes import ThemedTk
 import sys
 import os
 from colorama import Fore, Style
@@ -11,40 +11,71 @@ colorama.init(autoreset=True)
 
 windows = {}
 
-# RARARRARARARARARARARARA
-def reporterror(code="err.code", message="Test report! No errors found.", er_line=str(0), err_type="Test/Envierment Error"):
-    print(f"{Style.BRIGHT}{Fore.CYAN}AzuraLang(GUI) Log:")
-    print(f"{Style.BRIGHT}{Fore.RED}An error has accured at line {er_line}. Code: {code}")
-    print(f"{Style.BRIGHT}{Fore.RED}{err_type} => {message}")
-    print(f"{Style.BRIGHT}\033[38;5;208mThis arror is indeed fixable. If not, please file an issue at:\nhttps://github.com/AzuraCorp/AzuraLang/issues !")
-    print(f"{Style.RESET_ALL}")
+# Global theme dictionary to sync ttkthemes and layout background colors automatically
+_THEME = {
+    "name": "arc",        # Default light theme
+    "win_bg": "#f5f6f7",  # Light background color for the main window canvas
+    "label_fg": "#333333",# Dark text for light mode readability
+    "text_bg": "#ffffff", # Default TextBox background
+    "text_fg": "#333333"  # Default TextBox text color
+}
+
+# AUTO-PASS DARK THEME FUNCTION
+def useDarkMode():
+    """Switches the entire engine layout configuration to a dark theme."""
+    global _THEME
+    _THEME["name"] = "equilux"     # Sleek dark mode theme from ttkthemes
+    _THEME["win_bg"] = "#3c3c3c"   # Pure Equilux layout background hex color
+    _THEME["label_fg"] = "#ffffff" # Crisp white text color for dark mode labels
+    _THEME["text_bg"] = "#2b2b2b"  # Dark gray background for legacy Text widgets
+    _THEME["text_fg"] = "#ffffff"  # Crisp white text for readability
 
 # Make the window...
 def window(Name, title="Window", size="100x200"):
-    win = Tk()
+    # Automatically pulls whichever theme name is globally active
+    win = ThemedTk(theme=_THEME["name"])
     win.title(title)
     win.geometry(size)
-    windows[Name] = win  # Store the actual object
+
+    # --- GLOBAL STYLE OVERRIDES FOR TTK THEME CLEANLINESS ---
+    # Create a style engine mapping bound directly to this window instance
+    style = t.Style(win)
+
+    # Dynamically configure styles to completely wipe out any light-gray artifact blocks
+    style.configure("TLabel", background=_THEME["win_bg"], foreground=_THEME["label_fg"])
+    style.configure("TFrame", background=_THEME["win_bg"])
+
+    # Configure the underlying root Tkinter frame color to seamlessly blend with the style palette
+    win.configure(bg=_THEME["win_bg"])
+    # ---------------------------------------------------------
+
+    windows[Name] = win
     return win
+
+# RARARRARARARARARARARARA
+def reporterror(code="err.code", message="Test report! No errors found.", er_line=str(0), err_type="Test/Enviermont Error"):
+    print(f"{Style.BRIGHT}{Fore.CYAN}AzuraLang(GUI) Log:")
+    print(f"{Style.BRIGHT}{Fore.RED}An error has accured at line {er_line}. Code: {code}")
+    print(f"{Style.BRIGHT}{Fore.RED}{err_type} => {message}")
+    print(f"{Style.BRIGHT}\033[38;5;208mThis arror is indeed fixable. If not, please file an issue at:\nhttps://github.com/AzuraCorp/AzuraLang")
+    print(f"{Style.RESET_ALL}")
 
 # Make the label widget
 def label(inWinName, text="label"):
-    # Pull the actual window object from our dictionary
     parent = windows.get(inWinName)
     if parent:
         lbl = t.Label(parent, text=text)
-        lbl.pack() # Make it appear
+        lbl.pack() 
         return lbl
     else:
         reporterror(code="0x01", message=f"Window '{inWinName}' not found!")
 
 # Make the button widget
 def button(inWinName, text="button", command=lambda: print('Hello, World!')):
-    # Pull the actual window object from our dictionary
     parent = windows.get(inWinName)
     if parent:
         btn = t.Button(parent, text=text, command=command)
-        btn.pack() # Make it appear
+        btn.pack() 
         return btn
     else:
         reporterror(code="0x01", message=f"Window '{inWinName}' not found!")
@@ -53,36 +84,32 @@ def button(inWinName, text="button", command=lambda: print('Hello, World!')):
 def guiInput(inWinName, text="", input_type="TextString", select_mode="file"):
     from tkinter import Text, filedialog, colorchooser
     
-    # Pull the actual window object from our dictionary
-    parent = windows.get(inWinName) [cite: 43]
+    parent = windows.get(inWinName)
     if not parent:
-        reporterror(code="0x01", message=f"Window '{inWinName}' not found!") [cite: 43]
+        reporterror(code="0x01", message=f"Window '{inWinName}' not found!")
         return None
         
-    # Create a layout frame container inside the target window
-    frame = t.Frame(parent) [cite: 42, 44]
+    frame = t.Frame(parent)
     frame.pack(fill="x", padx=5, pady=5)
     
     if text:
-        lbl = t.Label(frame, text=text) [cite: 42, 44]
+        lbl = t.Label(frame, text=text)
         lbl.pack(side="left", padx=5)
         
     if input_type == "TextString":
-        widget = t.Entry(frame) [cite: 42]
+        widget = t.Entry(frame)
         widget.pack(side="right", expand=True, fill="x", padx=5)
-        # Directly map the entry's getter
         frame.get = widget.get
         
     elif input_type == "TextBox":
-        # Standard tk.Text is used here since ttk doesn't feature a multiline widget
-        widget = Text(frame, height=4, width=30)
+        # Automatically inherits global text layout colors to completely prevent background clashing!
+        widget = Text(frame, height=4, width=30, bg=_THEME["text_bg"], fg=_THEME["text_fg"], relief="flat", padx=5, pady=5)
         widget.pack(side="right", expand=True, fill="x", padx=5)
-        # Bind a cleaner text retriever to extract content cleanly
         frame.get = lambda: widget.get("1.0", "end").strip()
         
     elif input_type == "Select":
         frame.stored_value = ""
-        value_label = t.Label(frame, text="None selected", relief="sunken", width=20) [cite: 42]
+        value_label = t.Label(frame, text="None selected", relief="sunken", width=20)
         value_label.pack(side="left", padx=5, expand=True, fill="x")
         
         def handle_selection():
@@ -98,28 +125,20 @@ def guiInput(inWinName, text="", input_type="TextString", select_mode="file"):
                     value_label.config(text=color_code)
                     
         button_title = f"Choose {select_mode.capitalize()}"
-        btn = t.Button(frame, text=button_title, command=handle_selection) [cite: 42]
+        btn = t.Button(frame, text=button_title, command=handle_selection)
         btn.pack(side="right", padx=5)
         
-        # Expose the hidden value via the identical .get() hook
         frame.get = lambda: frame.stored_value
         
     return frame
 
-# Define run at the top level so it can be imported!
 def run():
     if windows:
-        # This grabs the actual window object of the first entry
-        first_name = list(windows.keys())[0]
-        # Start the loop using the first window object
         list(windows.values())[0].mainloop()
     else:
         reporterror(code="0x00", message="No windows existing!")
 
-# init the stuff
 if __name__ == "__main__":
-
-    # sys.argv[0] is the script name, so we start at index 1
     args = sys.argv[1:]
 
     if "-t" in args or "--test" in args:
