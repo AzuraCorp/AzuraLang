@@ -4,12 +4,47 @@ import sys
 import os
 from colorama import Fore, Style
 import pytoml
+import traceback
 
 # Initialize colorama
 import colorama
 colorama.init(autoreset=True)
 
 windows = {}
+
+def azura_exception_handler(exctype, value, tb):
+    """Overrides Python's default crash behavior to catch missing functions cleanly."""
+    if exctype is NameError:
+        # Extract the line number where the NameError occurred
+        # tb_next loops down the traceback stack to get to the actual execution line
+        current_tb = tb
+        while current_tb.tb_next:
+            current_tb = current_tb.tb_next
+        line_number = str(current_tb.tb_lineno)
+
+        # Format a clear message showing what variable/function name is missing
+        error_message = str(value)
+
+        # Route it directly into your premium custom error engine!
+        reporterror(
+            code="0x02",
+            message=error_message,
+            er_line=line_number,
+            err_type="Name / Reference Error"
+        )
+
+        # Optional: You can choose to exit or let the program try to continue.
+        # Since missing names usually break the UI, a clean exit keeps the terminal neat:
+        sys.exit(1)
+
+    else:
+        # If it's a completely different kind of error (like a SyntaxError),
+        # let standard Python handle it normally so you can still debug it.
+        sys.__excepthook__(exctype, value, tb)
+
+# Tell Python to use your custom handler for all unhandled runtime crashes
+sys.excepthook = azura_exception_handler
+
 
 # Global theme dictionary to sync ttkthemes and layout background colors automatically
 _THEME = {
@@ -55,9 +90,9 @@ def window(Name, title="Window", size="100x200"):
 # RARARRARARARARARARARARA
 def reporterror(code="err.code", message="Test report! No errors found.", er_line=str(0), err_type="Test/Enviermont Error"):
     print(f"{Style.BRIGHT}{Fore.CYAN}AzuraLang(GUI) Log:")
-    print(f"{Style.BRIGHT}{Fore.RED}An error has accured at line {er_line}. Code: {code}")
+    print(f"{Style.BRIGHT}{Fore.RED}An error has acured at line {er_line}. Code: {code}")
     print(f"{Style.BRIGHT}{Fore.RED}{err_type} => {message}")
-    print(f"{Style.BRIGHT}\033[38;5;208mThis arror is indeed fixable. If not, please file an issue at:\nhttps://github.com/AzuraCorp/AzuraLang")
+    print(f"{Style.BRIGHT}\033[38;5;208mThis error is indeed fixable. If not, please file an issue at:\nhttps://github.com/AzuraCorp/AzuraLang")
     print(f"{Style.RESET_ALL}")
 
 # Make the label widget
@@ -102,34 +137,36 @@ def guiInput(inWinName, text="", input_type="TextString", select_mode="file"):
         frame.get = widget.get
         
     elif input_type == "TextBox":
-        # Automatically inherits global text layout colors to completely prevent background clashing!
         widget = Text(frame, height=4, width=30, bg=_THEME["text_bg"], fg=_THEME["text_fg"], relief="flat", padx=5, pady=5)
         widget.pack(side="right", expand=True, fill="x", padx=5)
         frame.get = lambda: widget.get("1.0", "end").strip()
-        
+
     elif input_type == "Select":
         frame.stored_value = ""
         value_label = t.Label(frame, text="None selected", relief="sunken", width=20)
         value_label.pack(side="left", padx=5, expand=True, fill="x")
-        
+
         def handle_selection():
             if select_mode == "file":
-                filepath = filedialog.askopenfilename(title="Select File")
+                # Swapped to asksaveasfilename to force your native system file manager layout!
+                filepath = filedialog.asksaveasfilename(title="Save As / Select File Location")
                 if filepath:
                     frame.stored_value = filepath
-                    value_label.config(text=filepath.split("/")[-1])
+                    # Cross-platform safe path splitter to keep the UI clean
+                    frame.stored_value = filepath
+                    value_label.config(text=os.path.basename(filepath))
             elif select_mode == "color":
                 color_code = colorchooser.askcolor(title="Select Color")[1]
                 if color_code:
                     frame.stored_value = color_code
                     value_label.config(text=color_code)
-                    
+
         button_title = f"Choose {select_mode.capitalize()}"
         btn = t.Button(frame, text=button_title, command=handle_selection)
         btn.pack(side="right", padx=5)
-        
+
         frame.get = lambda: frame.stored_value
-        
+
     return frame
 
 def run():
@@ -141,6 +178,18 @@ def run():
 if __name__ == "__main__":
     args = sys.argv[1:]
 
+    # 1. Look inside the execution namespace for 'run'
+    if "run" not in globals() or not callable(globals()["run"]):
+        # Safe fallback defaults if line or type isn't tracked yet
+        reporterror(
+            code="0x04",
+            message="The core application execution hook 'run()' is missing from the workspace runtime!",
+            er_line="N/A",
+            err_type="Compilation / Namespace Error"
+        )
+        sys.exit(1) # Gracefully kill execution since the app can't start
+
+    # 2. Continue with your normal boot routing blocks if it exists
     if "-t" in args or "--test" in args:
         window("aaa")
         label("aaa", text="testlabel")
