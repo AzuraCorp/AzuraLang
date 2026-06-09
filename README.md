@@ -1,4 +1,8 @@
-# AzuraLang
+<img src="./assets/banner.svg" alt="banner">
+
+# <img title="" src="./assets/AzuraLangLogo.svg" alt="Launch App" width="50"> AzuraLang
+
+<a href="https://github.com/AzuraCorp/AzuraLang/issues"><img title="" src="./assets/AzuraLangIssuesButton.svg" alt="" width="123" data-align="inline"></a> 
 
 ## What is AzuraLang?
 
@@ -15,13 +19,13 @@ It is a high-level library, that is really easy to use, mod and contribute.
 #### Normally, to install AzuraLang you can use pip:
 
 ```bash
-pip install azuralang
+pip install AzuraLang
 ```
 
 #### For linux(only if the PEP 668/externally managed environment error):
 
 ```bash
-pip install azuralang --break-system-packages
+pip install AzuraLang --break-system-packages
 ```
 
 ### ADaC Channel(AllDistributions and Commits channel)
@@ -37,7 +41,7 @@ pip install azuralang --break-system-packages
 
 1. Clone the repo: `git clone https://github.com/AzuraCorp/AzuraLang/`
 2. Enter the folder: `cd AzuraLang`
-3. Build! `bash build.bash` or `sh build.bash`
+3. Build! `./build.sh`(Or use your terminal command e.g. `zsh build.sh`)
 
 #### Use the built files(only PreReleases and Full versions, f. e.: vPreREL-3 and vF-10)
 
@@ -47,7 +51,4 @@ pip install azuralang --break-system-packages
 
 ## Wanna join/help?
 
-##### If you want to join/help me, write an e-mail to 'zhan2os1ks@duck.com' to    get my attention.
-
-##### E-Mail example: "Hi Zhan! I wanna join you, my GitHub username is 123example.    123example"
-
+##### If you want to join/help me, write us an e-mail to 'azuracorp@duck.com' to    get our attention.

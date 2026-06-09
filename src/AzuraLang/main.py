@@ -1,93 +1,44 @@
-from tkinter import ttk as t
-from ttkthemes import ThemedTk
 import sys
 import os
-from colorama import Fore, Style
-import pytoml
 import traceback
-
-# Initialize colorama
+import tkinter as tk
+from tkinter import ttk  # Standard native engine components
+from tkinter import filedialog, colorchooser
+from colorama import Fore, Style
 import colorama
+
 colorama.init(autoreset=True)
 
+# Global framework window registry mapping
 windows = {}
 
-def azura_exception_handler(exctype, value, tb):
-    """Overrides Python's default crash behavior to catch missing functions cleanly."""
-    if exctype is NameError:
-        # Extract the line number where the NameError occurred
-        # tb_next loops down the traceback stack to get to the actual execution line
-        current_tb = tb
-        while current_tb.tb_next:
-            current_tb = current_tb.tb_next
-        line_number = str(current_tb.tb_lineno)
-
-        # Format a clear message showing what variable/function name is missing
-        error_message = str(value)
-
-        # Route it directly into your premium custom error engine!
-        reporterror(
-            code="0x02",
-            message=error_message,
-            er_line=line_number,
-            err_type="Name / Reference Error"
-        )
-
-        # Optional: You can choose to exit or let the program try to continue.
-        # Since missing names usually break the UI, a clean exit keeps the terminal neat:
-        sys.exit(1)
-
-    else:
-        # If it's a completely different kind of error (like a SyntaxError),
-        # let standard Python handle it normally so you can still debug it.
-        sys.__excepthook__(exctype, value, tb)
-
-# Tell Python to use your custom handler for all unhandled runtime crashes
-sys.excepthook = azura_exception_handler
-
-
-# Global theme dictionary to sync ttkthemes and layout background colors automatically
+# Master theme configuration mapping for raw tk widgets and window backdrops
 _THEME = {
-    "name": "arc",        # Default light theme
-    "win_bg": "#f5f6f7",  # Light background color for the main window canvas
-    "label_fg": "#333333",# Dark text for light mode readability
-    "text_bg": "#ffffff", # Default TextBox background
-    "text_fg": "#333333"  # Default TextBox text color
+    "win_bg": "#f5f6f7",     # Default flat light grey canvas style
+    "label_fg": "#333333",   # Dark charcoal text
+    "entry_bg": "#ffffff",   # Solid white text cells
+    "entry_fg": "#333333",
+    "btn_bg": "#e1e1e1",     # Soft grey interactive buttons
+    "btn_fg": "#000000"
 }
 
-# AUTO-PASS DARK THEME FUNCTION
 def useDarkMode():
-    """Switches the entire engine layout configuration to a dark theme."""
+    """Modifies structural theme maps and applies custom native styles for dark mode."""
     global _THEME
-    _THEME["name"] = "equilux"     # Sleek dark mode theme from ttkthemes
-    _THEME["win_bg"] = "#3c3c3c"   # Pure Equilux layout background hex color
-    _THEME["label_fg"] = "#ffffff" # Crisp white text color for dark mode labels
-    _THEME["text_bg"] = "#2b2b2b"  # Dark gray background for legacy Text widgets
-    _THEME["text_fg"] = "#ffffff"  # Crisp white text for readability
+    _THEME["win_bg"] = "#2b2b2b"    # Charcoal theme background canvas
+    _THEME["label_fg"] = "#ffffff"  # High-contrast text
+    _THEME["entry_bg"] = "#3c3c3c"  # Dark gray input slots
+    _THEME["entry_fg"] = "#ffffff"
+    _THEME["btn_bg"] = "#4a4a4a"    # Dark interactive buttons
+    _THEME["btn_fg"] = "#ffffff"
 
-# Make the window...
-def window(Name, title="Window", size="100x200"):
-    # Automatically pulls whichever theme name is globally active
-    win = ThemedTk(theme=_THEME["name"])
-    win.title(title)
-    win.geometry(size)
+    # Configure global native TTK widget mapping changes for Dark Mode
+    style = ttk.Style()
+    style.theme_use('clam')  # Native cross-platform engine allowing custom coloration mapping
+    style.configure('.', background="#2b2b2b", foreground="#ffffff")
+    style.configure('TLabel', background="#2b2b2b", foreground="#ffffff")
+    style.configure('TButton', background="#4a4a4a", foreground="#ffffff")
 
-    # --- GLOBAL STYLE OVERRIDES FOR TTK THEME CLEANLINESS ---
-    # Create a style engine mapping bound directly to this window instance
-    style = t.Style(win)
-
-    # Dynamically configure styles to completely wipe out any light-gray artifact blocks
-    style.configure("TLabel", background=_THEME["win_bg"], foreground=_THEME["label_fg"])
-    style.configure("TFrame", background=_THEME["win_bg"])
-
-    # Configure the underlying root Tkinter frame color to seamlessly blend with the style palette
-    win.configure(bg=_THEME["win_bg"])
-    # ---------------------------------------------------------
-
-    windows[Name] = win
-    return win
-
-# RARARRARARARARARARARARA
 def reporterror(code="err.code", message="Test report! No errors found.", er_line=str(0), err_type="Test/Enviermont Error"):
     print(f"{Style.BRIGHT}{Fore.CYAN}AzuraLang(GUI) Log:")
     print(f"{Style.BRIGHT}{Fore.RED}An error has acured at line {er_line}. Code: {code}")
@@ -95,64 +46,138 @@ def reporterror(code="err.code", message="Test report! No errors found.", er_lin
     print(f"{Style.BRIGHT}\033[38;5;208mThis error is indeed fixable. If not, please file an issue at:\nhttps://github.com/AzuraCorp/AzuraLang")
     print(f"{Style.RESET_ALL}")
 
-# Make the label widget
+def azura_exception_handler(exctype, value, tb):
+    """Intercepts unhandled NameErrors and formats them cleanly inside the framework engine."""
+    if exctype is NameError:
+        current_tb = tb
+        while current_tb.tb_next:
+            current_tb = current_tb.tb_next
+        line_number = str(current_tb.tb_lineno)
+
+        error_message = str(value)
+        reporterror(
+            code="0x02",
+            message=error_message,
+            er_line=line_number,
+            err_type="Name / Reference Error"
+        )
+        sys.exit(1)
+    else:
+        # Pass non-NameErrors directly to standard Python crash handler tools
+        sys.__excepthook__(exctype, value, tb)
+
+# Assign our global error shield interceptor mapping directly to Python system core
+sys.excepthook = azura_exception_handler
+
+# =====================================================================
+# WINDOW HOUSING ENGINE
+# =====================================================================
+def window(Name, title="Window", size="400x300"):
+    """Creates a base window instance utilizing standard Tkinter windows as containers."""
+    win = tk.Tk()  # Replaced legacy ThemedTk reference
+    win.title(title)
+    win.geometry(size)
+    win.configure(bg=_THEME["win_bg"])
+
+    # Initialize basic native TTK layout styles for default setups
+    style = ttk.Style(win)
+    if _THEME["win_bg"] == "#2b2b2b":
+        style.theme_use('clam')
+        style.configure('.', background="#2b2b2b", foreground="#ffffff")
+    else:
+        style.theme_use('default')
+
+    windows[Name] = win
+    return win
+
+# =====================================================================
+# NATIVE TTK COMPONENTS
+# =====================================================================
 def label(inWinName, text="label"):
+    """Renders a standard clean layout tracking system text inside TTK."""
     parent = windows.get(inWinName)
     if parent:
-        lbl = t.Label(parent, text=text)
-        lbl.pack() 
+        lbl = ttk.Label(parent, text=text)  # Native TTK element mapping
+        lbl.pack(pady=5)
         return lbl
     else:
-        reporterror(code="0x01", message=f"Window '{inWinName}' not found!")
+        reporterror(code="0x01", message=f"Window '{inWinName}' not found!", er_line="N/A", err_type="Window Lookup Error")
 
-# Make the button widget
 def button(inWinName, text="button", command=lambda: print('Hello, World!')):
+    """Renders an interactive system action button using TTK styling structures."""
     parent = windows.get(inWinName)
     if parent:
-        btn = t.Button(parent, text=text, command=command)
-        btn.pack() 
+        btn = ttk.Button(parent, text=text, command=command)  # Native TTK element mapping
+        btn.pack(pady=5)
         return btn
     else:
-        reporterror(code="0x01", message=f"Window '{inWinName}' not found!")
+        reporterror(code="0x01", message=f"Window '{inWinName}' not found!", er_line="N/A", err_type="Window Lookup Error")
 
-# Make an input widget (guiInput())
+# =====================================================================
+# PURE TK CUSTOM COMPONENT FUNCTION (Isolated for style manipulation)
+# =====================================================================
 def guiInput(inWinName, text="", input_type="TextString", select_mode="file"):
-    from tkinter import Text, filedialog, colorchooser
-    
+    """Returns a pure raw tk.Frame containing manually colored widgets to allow flat custom sizing."""
     parent = windows.get(inWinName)
     if not parent:
-        reporterror(code="0x01", message=f"Window '{inWinName}' not found!")
+        reporterror(code="0x01", message=f"Window '{inWinName}' not found!", er_line="N/A", err_type="Window Lookup Error")
         return None
-        
-    frame = t.Frame(parent)
+
+    # 1. Use a raw tk.Frame container to isolate geometry properties from styling engines
+    frame = tk.Frame(parent, bg=_THEME["win_bg"])
     frame.pack(fill="x", padx=5, pady=5)
-    
+
+    # 2. Raw tk.Label for explicit color overrides
     if text:
-        lbl = t.Label(frame, text=text)
+        lbl = tk.Label(frame, text=text, bg=_THEME["win_bg"], fg=_THEME["label_fg"])
         lbl.pack(side="left", padx=5)
-        
+
+    # 3. Handle specific Input Type rendering layouts manually
     if input_type == "TextString":
-        widget = t.Entry(frame)
+        widget = tk.Entry(
+            frame,
+            bg=_THEME["entry_bg"],
+            fg=_THEME["entry_fg"],
+            insertbackground=_THEME["entry_fg"],
+            relief="solid",
+            bd=1
+        )
         widget.pack(side="right", expand=True, fill="x", padx=5)
         frame.get = widget.get
-        
+
     elif input_type == "TextBox":
-        widget = Text(frame, height=4, width=30, bg=_THEME["text_bg"], fg=_THEME["text_fg"], relief="flat", padx=5, pady=5)
+        widget = tk.Text(
+            frame,
+            height=4,
+            width=30,
+            bg=_THEME["entry_bg"],
+            fg=_THEME["entry_fg"],
+            insertbackground=_THEME["entry_fg"],
+            relief="solid",
+            bd=1,
+            padx=5,
+            pady=5
+        )
         widget.pack(side="right", expand=True, fill="x", padx=5)
         frame.get = lambda: widget.get("1.0", "end").strip()
 
     elif input_type == "Select":
         frame.stored_value = ""
-        value_label = t.Label(frame, text="None selected", relief="sunken", width=20)
+        value_label = tk.Label(
+            frame,
+            text="None selected",
+            relief="solid",
+            bd=1,
+            width=20,
+            bg=_THEME["entry_bg"],
+            fg=_THEME["entry_fg"]
+        )
         value_label.pack(side="left", padx=5, expand=True, fill="x")
 
         def handle_selection():
             if select_mode == "file":
-                # Swapped to asksaveasfilename to force your native system file manager layout!
                 filepath = filedialog.asksaveasfilename(title="Save As / Select File Location")
                 if filepath:
-                    frame.stored_value = filepath
-                    # Cross-platform safe path splitter to keep the UI clean
                     frame.stored_value = filepath
                     value_label.config(text=os.path.basename(filepath))
             elif select_mode == "color":
@@ -162,7 +187,15 @@ def guiInput(inWinName, text="", input_type="TextString", select_mode="file"):
                     value_label.config(text=color_code)
 
         button_title = f"Choose {select_mode.capitalize()}"
-        btn = t.Button(frame, text=button_title, command=handle_selection)
+        btn = tk.Button(
+            frame,
+            text=button_title,
+            command=handle_selection,
+            bg=_THEME["btn_bg"],
+            fg=_THEME["btn_fg"],
+            relief="flat",
+            activebackground=_THEME["btn_bg"]
+        )
         btn.pack(side="right", padx=5)
 
         frame.get = lambda: frame.stored_value
@@ -170,32 +203,34 @@ def guiInput(inWinName, text="", input_type="TextString", select_mode="file"):
     return frame
 
 def run():
+    """Starts the application window loop sequence."""
     if windows:
         list(windows.values())[0].mainloop()
     else:
-        reporterror(code="0x00", message="No windows existing!")
+        reporterror(code="0x00", message="No active window instances exist to execute!", er_line="N/A", err_type="Runtime Error")
 
+# =====================================================================
+# SYSTEM VALIDATION TESTS
+# =====================================================================
 if __name__ == "__main__":
     args = sys.argv[1:]
 
-    # 1. Look inside the execution namespace for 'run'
+    # Pre-flight environment verify checks
     if "run" not in globals() or not callable(globals()["run"]):
-        # Safe fallback defaults if line or type isn't tracked yet
-        reporterror(
-            code="0x04",
-            message="The core application execution hook 'run()' is missing from the workspace runtime!",
-            er_line="N/A",
-            err_type="Compilation / Namespace Error"
-        )
-        sys.exit(1) # Gracefully kill execution since the app can't start
+        reporterror(code="0x04", message="The core run() loop execution system is missing!", er_line="N/A", err_type="Namespace Error")
+        sys.exit(1)
 
-    # 2. Continue with your normal boot routing blocks if it exists
+    # Local diagnostic argument checking
     if "-t" in args or "--test" in args:
-        window("aaa")
-        label("aaa", text="testlabel")
-        button("aaa", text="Click!", command=lambda: print("TEST! BUTTON CLICKED!"))
-    elif "-h" in args or "--help" in args:
-        print("		AzuraLang help\n azuralang [command] <value> or")
-        print("\nazuralang")
+        useDarkMode()  # Test global dark layout setups seamlessly
+
+        window("main_canvas", title="Azura Lang Native Environment Test", size="500x400")
+        label("main_canvas", text="Testing System-Native UI Elements (TTK)")
+
+        # Elements processed cleanly through the custom pure tk design mapping parameters
+        guiInput("main_canvas", text="Input Command String:", input_type="TextString")
+        guiInput("main_canvas", text="Target Compilation Directory:", input_type="Select", select_mode="file")
+
+        button("main_canvas", text="Confirm Workspace Launch", command=lambda: print("Framework Engine Diagnostic Check Clear."))
 
     run()
