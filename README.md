@@ -2,7 +2,7 @@
 
 # <img title="" src="./assets/AzuraLangLogo.svg" alt="Launch App" width="50"> AzuraLang
 
-<a href="https://github.com/AzuraCorp/AzuraLang/issues"><img title="" src="./assets/AzuraLangIssuesButton.svg" alt="" width="123" data-align="inline"></a><a href="AzuraCorp.github.com/AzuraLang"><img title="" src="./assets/AzuraLangWebsiteButton.svg" alt="" width="123" data-align="inline"></a> 
+<a href="https://github.com/AzuraCorp/AzuraLang/issues"><img title="" src="./assets/AzuraLangIssuesButton.svg" alt="" width="123" data-align="inline"></a><a href="https://AzuraCorp.github.io/AzuraLang"><img title="" src="./assets/AzuraLangWebsiteButton.svg" alt="" width="123" data-align="inline"></a> 
 
 ## What is AzuraLang?
 
