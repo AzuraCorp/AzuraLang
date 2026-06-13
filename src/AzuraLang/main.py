@@ -229,7 +229,7 @@ if __name__ == "__main__":
 
         # Elements processed cleanly through the custom pure tk design mapping parameters
         guiInput("main_canvas", text="Input Command String:", input_type="TextString")
-        guiInput("main_canvas", text="Target Compilation Directory:", input_type="Select", select_mode="file")
+        io = guiInput("main_canvas", text="Target Compilation Directory:", input_type="Select", select_mode="file")
 
         button("main_canvas", text="Confirm Workspace Launch", command=lambda: print("Framework Engine Diagnostic Check Clear."))
 
