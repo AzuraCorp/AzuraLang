@@ -4,10 +4,11 @@ build-backend = "hatchling.build"
 [project]
 name = "AzuraLang"
 version = "0.1"
+ALversion = "BETA-1"
 authors = [
-  { name="Zhan2os1ks", email="zhan2os1ks@duck.com" },
+  { name="Zhan2os1ks", email="azuracorp@duck.com" },
 ]
-description = "A librery for making ttk apps."
+description = "A Python framework for easier making of GUI apps."
 readme = "README.md"
 requires-python = ">=3.11"
 classifiers = [
@@ -18,5 +19,5 @@ license = "LGPL-3.0-only"
 license-files = ["LICEN[CS]E*"]
 
 [project.urls]
-Homepage = "https://azuracorp.github.io/AzuraLang"
 Issues = "https://github.com/AzuraCorp/AzuraLang/issues"
+Wiki = "https://github.com/AzuraCorp/AzuraLang/wiki"
