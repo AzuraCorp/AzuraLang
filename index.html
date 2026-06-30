@@ -239,16 +239,49 @@
     width: 100%;
     position: left;
   }
+  .right-alighned-div{
+    display: grid;
+    /* Instead of 'center', use 'end' for the horizontal alignment */
+    justify-items: end; 
+    /* 'align-items' keeps it centered vertically, or you can set that to 'center' too */
+    align-items: center; 
+  }
+  .full-screen-banner {
+    width: 100%;          
+    margin: 0;             
+  }
+  
+  .full-screen-banner img {
+    width: 100%;          
+    display: block;    
+    object-fit: cover;  
+  }
+
+  .AzuraLangAd{
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    border-top-left-radius: 0px;
+    border-top-right-radius: 0px;
+  }
 </style>
   </head>
   <body>
-    <main class="markdown-export">
-    <div class="banner-img">
+    <div class="full-screen-banner">
       <img src="./assets/banner.svg" alt="banner" class="banner-img">
     </div>
-<h1><img title="" src="./assets/AzuraLangLogo.svg" alt="Launch App" width="50"> AzuraLang</h1>
-<p><a href="https://github.com/AzuraCorp/AzuraLang/issues"><img title="" src="./assets/AzuraLangIssuesButton.svg" alt="" width="123"></a><a href="https://AzuraCorp.github.io/AzuraLang"><img title="" src="./assets/AzuraLangWebsiteButton.svg" alt="" width="123"></a></p>
-<img src="./assets/AzuraLang.svg">
+  <main class="markdown-export">
+<div class="AzuraLangAd">
+<div>
+  <img src="./assets/Groupsimplicity.svg">
+</div>
+<div class="right-alighned-div">
+  <img src="./assets/Groupeasytolearn.svg">
+</div>
+<div>
+  <img src="./assets/Groupcompotability.svg">
+</div>
+</div>
+<br>
 
 <!--<h5>If you want to join/help me, write us an e-mail to '<a href="mailto:azuracorp@duck.com">azuracorp@duck.com</a>' to    get our attention.</h5>-->
     </main>
