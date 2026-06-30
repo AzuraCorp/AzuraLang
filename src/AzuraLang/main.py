@@ -51,6 +51,7 @@ def reporterror(code="err.code", message="Test report! No errors found.", er_lin
     print(f"{Style.BRIGHT}{Fore.RED}{err_type} => {message}")
     print(f"{Style.BRIGHT}\033[38;5;208mThis error is indeed fixable. If not, please file an issue at:\nhttps://github.com/AzuraCorp/AzuraLang/issiues")
     print(f"{Style.RESET_ALL}")
+    sys.exit(1)
 
 
 def azura_exception_handler(exctype, value, tb):
