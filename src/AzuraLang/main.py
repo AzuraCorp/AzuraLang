@@ -6,6 +6,7 @@ from tkinter import ttk  # Standard native engine components
 from tkinter import filedialog, colorchooser
 from colorama import Fore, Style
 import colorama
+import inspect
 
 colorama.init(autoreset=True)
 
@@ -21,6 +22,11 @@ _THEME = {
     "btn_bg": "#e1e1e1",     # Soft grey interactive buttons
     "btn_fg": "#000000"
 }
+
+def get_line_number():
+    # .f_back gets the frame of the caller who called this function
+    caller_frame = inspect.currentframe().f_back
+    return caller_frame.f_lineno
 
 def useDarkMode():
     """Modifies structural theme maps and applies custom native styles for dark mode."""
@@ -39,12 +45,13 @@ def useDarkMode():
     style.configure('TLabel', background="#2b2b2b", foreground="#ffffff")
     style.configure('TButton', background="#4a4a4a", foreground="#ffffff")
 
-def reporterror(code="err.code", message="Test report! No errors found.", er_line=str(0), err_type="Test/Enviermont Error"):
+def reporterror(code="err.code", message="Test report! No errors found.", er_line={get_line_number()}, err_type="Test/Enviermont Error"):
     print(f"{Style.BRIGHT}{Fore.CYAN}AzuraLang(GUI) Log:")
     print(f"{Style.BRIGHT}{Fore.RED}An error has acured at line {er_line}. Code: {code}")
     print(f"{Style.BRIGHT}{Fore.RED}{err_type} => {message}")
-    print(f"{Style.BRIGHT}\033[38;5;208mThis error is indeed fixable. If not, please file an issue at:\nhttps://github.com/AzuraCorp/AzuraLang")
+    print(f"{Style.BRIGHT}\033[38;5;208mThis error is indeed fixable. If not, please file an issue at:\nhttps://github.com/AzuraCorp/AzuraLang/issiues")
     print(f"{Style.RESET_ALL}")
+
 
 def azura_exception_handler(exctype, value, tb):
     """Intercepts unhandled NameErrors and formats them cleanly inside the framework engine."""
@@ -58,7 +65,7 @@ def azura_exception_handler(exctype, value, tb):
         reporterror(
             code="0x02",
             message=error_message,
-            er_line=line_number,
+            er_line={get_line_number()},
             err_type="Name / Reference Error"
         )
         sys.exit(1)
@@ -101,7 +108,7 @@ def label(inWinName, text="label"):
         lbl.pack(pady=5)
         return lbl
     else:
-        reporterror(code="0x01", message=f"Window '{inWinName}' not found!", er_line="N/A", err_type="Window Lookup Error")
+        reporterror(code="0x01", message=f"Window '{inWinName}' not found!", er_line={get_line_number()}, err_type="Window Lookup Error")
 
 def button(inWinName, text="button", command=lambda: print('Hello, World!')):
     """Renders an interactive system action button using TTK styling structures."""
@@ -111,7 +118,7 @@ def button(inWinName, text="button", command=lambda: print('Hello, World!')):
         btn.pack(pady=5)
         return btn
     else:
-        reporterror(code="0x01", message=f"Window '{inWinName}' not found!", er_line="N/A", err_type="Window Lookup Error")
+        reporterror(code="0x01", message=f"Window '{inWinName}' not found!", er_line={get_line_number()}, err_type="Window Lookup Error")
 
 # =====================================================================
 # PURE TK CUSTOM COMPONENT FUNCTION (Isolated for style manipulation)
@@ -120,7 +127,7 @@ def guiInput(inWinName, text="", input_type="TextString", select_mode="file"):
     """Returns a pure raw tk.Frame containing manually colored widgets to allow flat custom sizing."""
     parent = windows.get(inWinName)
     if not parent:
-        reporterror(code="0x01", message=f"Window '{inWinName}' not found!", er_line="N/A", err_type="Window Lookup Error")
+        reporterror(code="0x01", message=f"Window '{inWinName}' not found!", er_line={get_line_number()}, err_type="Window Lookup Error")
         return None
 
     # 1. Use a raw tk.Frame container to isolate geometry properties from styling engines
@@ -207,7 +214,7 @@ def run():
     if windows:
         list(windows.values())[0].mainloop()
     else:
-        reporterror(code="0x00", message="No active window instances exist to execute!", er_line="N/A", err_type="Runtime Error")
+        reporterror(code="0x00", message="No active window instances exist to execute!", er_line={get_line_number()}, err_type="Runtime Error")
 
 # =====================================================================
 # SYSTEM VALIDATION TESTS
@@ -217,7 +224,7 @@ if __name__ == "__main__":
 
     # Pre-flight environment verify checks
     if "run" not in globals() or not callable(globals()["run"]):
-        reporterror(code="0x04", message="The core run() loop execution system is missing!", er_line="N/A", err_type="Namespace Error")
+        reporterror(code="0x04", message="The core run() loop execution system is missing!", er_line={get_line_number()}, err_type="Namespace Error")
         sys.exit(1)
 
     # Local diagnostic argument checking
