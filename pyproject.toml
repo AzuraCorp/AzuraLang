@@ -3,7 +3,7 @@ requires = ["hatchling >= 1.26"]
 build-backend = "hatchling.build"
 [project]
 name = "AzuraLang"
-version = "0.1"
+version = "0.1-beta1"
 ALversion = "BETA-1"
 authors = [
   { name="Zhan2os1ks", email="azuracorp@duck.com" },
