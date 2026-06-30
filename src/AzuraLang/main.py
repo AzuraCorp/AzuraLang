@@ -69,7 +69,6 @@ def azura_exception_handler(exctype, value, tb):
             er_line={get_line_number()},
             err_type="Name / Reference Error"
         )
-        sys.exit(1)
     else:
         # Pass non-NameErrors directly to standard Python crash handler tools
         sys.__excepthook__(exctype, value, tb)
