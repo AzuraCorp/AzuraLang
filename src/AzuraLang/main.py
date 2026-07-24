@@ -4,6 +4,7 @@ import traceback
 import tkinter as tk
 from tkinter import ttk  # Standard native engine components
 from tkinter import filedialog, colorchooser
+from tkinterweb import HtmlFrame
 from colorama import Fore, Style
 import colorama
 import inspect
@@ -76,9 +77,6 @@ def azura_exception_handler(exctype, value, tb):
 # Assign our global error shield interceptor mapping directly to Python system core
 sys.excepthook = azura_exception_handler
 
-# =====================================================================
-# WINDOW HOUSING ENGINE
-# =====================================================================
 def window(Name, title="Window", size="400x300"):
     """Creates a base window instance utilizing standard Tkinter windows as containers."""
     win = tk.Tk()  # Replaced legacy ThemedTk reference
@@ -97,9 +95,6 @@ def window(Name, title="Window", size="400x300"):
     windows[Name] = win
     return win
 
-# =====================================================================
-# NATIVE TTK COMPONENTS
-# =====================================================================
 def label(inWinName, text="label"):
     """Renders a standard clean layout tracking system text inside TTK."""
     parent = windows.get(inWinName)
@@ -120,9 +115,6 @@ def button(inWinName, text="button", command=lambda: print('Hello, World!')):
     else:
         reporterror(code="0x01", message=f"Window '{inWinName}' not found!", er_line={get_line_number()}, err_type="Window Lookup Error")
 
-# =====================================================================
-# PURE TK CUSTOM COMPONENT FUNCTION (Isolated for style manipulation)
-# =====================================================================
 def guiInput(inWinName, text="", input_type="TextString", select_mode="file"):
     """Returns a pure raw tk.Frame containing manually colored widgets to allow flat custom sizing."""
     parent = windows.get(inWinName)
@@ -209,6 +201,34 @@ def guiInput(inWinName, text="", input_type="TextString", select_mode="file"):
 
     return frame
 
+def webDisplay(inWinName, url="https://google.com", bg="#2b2b2b"):
+
+    parent = windows.get(inWinName)
+    if not parent:
+        reporterror(
+            code="0x01",
+            message=f"Window '{inWinName}' not found!",
+            er_line={get_line_number()},
+            err_type="Window Lookup Error"
+        )
+        return None
+
+    containerDisplay = tk.Frame(parent, bg=bg)
+    containerDisplay.pack(fill="both", expand=True, padx=5, pady=5)
+
+    browser = HtmlFrame(wrapper)
+    browser.pack(fill="both", expand=True)
+
+    if url.startswith("http://") or url.startswith("https://"):
+        browser.load_url(url)
+    else:
+        browser.load_file(url)
+
+    return containerDisplay
+
+
+'''=====SEPARATE HERE, END!!!====='''
+
 def run():
     """Starts the application window loop sequence."""
     if windows:
@@ -216,9 +236,6 @@ def run():
     else:
         reporterror(code="0x00", message="No active window instances exist to execute!", er_line={get_line_number()}, err_type="Runtime Error")
 
-# =====================================================================
-# SYSTEM VALIDATION TESTS
-# =====================================================================
 if __name__ == "__main__":
     args = sys.argv[1:]
 

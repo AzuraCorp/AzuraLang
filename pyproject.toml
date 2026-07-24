@@ -3,12 +3,12 @@ requires = ["hatchling >= 1.26"]
 build-backend = "hatchling.build"
 [project]
 name = "AzuraLang"
-version = "0.1"
-ALversion = "BETA-1"
+version = "0.1-beta2"
+ALversion = "BETA-2"
 authors = [
   { name="Zhan2os1ks", email="azuracorp@duck.com" },
 ]
-description = "A Python framework for easier making of GUI apps."
+description = "A Python framework for easier development of GUI apps."
 readme = "README.md"
 requires-python = ">=3.11"
 classifiers = [

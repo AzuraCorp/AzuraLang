@@ -12,4 +12,8 @@ setup(
     install_requires=[
         'colorama',
     ],
+    # Installs the azl command
+    scripts=[
+        'bin/azl',
+    ],
 )
