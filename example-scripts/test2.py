@@ -14,7 +14,7 @@ guiInput("darkWin", text="System Query:", input_type="TextString")
 guiInput("darkWin", text="Verbose Logs:", input_type="TextBox")
 
 # Confirm dialog interaction works cleanly under the dark engine
-guiInput("darkWin", text="Output Path:", input_type="Select", select_mode="file")
+filepath = guiInput("darkWin", text="Output Path:", input_type="Select", select_mode="file")
 
 button("darkWin", text="Execute Script", command=lambda: print("Dark mode engine online!"))
 

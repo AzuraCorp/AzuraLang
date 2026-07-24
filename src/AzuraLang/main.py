@@ -4,6 +4,7 @@ import traceback
 import tkinter as tk
 from tkinter import ttk  # Standard native engine components
 from tkinter import filedialog, colorchooser
+from tkinterweb import HtmlFrame
 from colorama import Fore, Style
 import colorama
 import inspect
@@ -200,15 +201,28 @@ def guiInput(inWinName, text="", input_type="TextString", select_mode="file"):
 
     return frame
 
-def webDisplay(inWinName, url, bg="#2b2b2b"):
+def webDisplay(inWinName, url="https://google.com", bg="#2b2b2b"):
 
-    containerDisplay = tk.Frame(inWinName, bg=bg)
+    parent = windows.get(inWinName)
+    if not parent:
+        reporterror(
+            code="0x01",
+            message=f"Window '{inWinName}' not found!",
+            er_line={get_line_number()},
+            err_type="Window Lookup Error"
+        )
+        return None
+
+    containerDisplay = tk.Frame(parent, bg=bg)
     containerDisplay.pack(fill="both", expand=True, padx=5, pady=5)
 
     browser = HtmlFrame(wrapper)
     browser.pack(fill="both", expand=True)
 
-    browser.load_url(url)
+    if url.startswith("http://") or url.startswith("https://"):
+        browser.load_url(url)
+    else:
+        browser.load_file(url)
 
     return containerDisplay
 
