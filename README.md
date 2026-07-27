@@ -2,13 +2,18 @@
 
 # <img title="" src="./assets/AzuraLangLogo.svg" alt="Launch App" width="50"> AzuraLang
 
-<a href="https://github.com/AzuraCorp/AzuraLang/issues"><img title="" src="./assets/AzuraLangIssuesButton.svg" alt="" width="123" data-align="inline"></a><a href="https://github.com/AzuraCorp/AzuraLang/releases"><img title="" src="./assets/AzuraLangReleasesButton.svg" alt="" width="123" data-align="inline"></a><a href="https://github.com/AzuraCorp/AzuraLang/wiki"><img title="" src="./assets/AzuraLangWikiButton.svg" alt="" width="123" data-align="inline"></a><a href="https://github.com/AzuraCorp/AzuraLang/pulls"><img title="" src="./assets/AzuraLangPullRequestsButton.svg" alt="" width="123" data-align="inline"></a>
-
+<a href="https://github.com/AzuraCorp/AzuraLang/issues"><img title="" src="./assets/AzuraLangIssuesButton.svg" alt="" width="123" data-align="inline"></a>
+<a href="https://github.com/AzuraCorp/AzuraLang/releases"><img title="" src="./assets/AzuraLangReleasesButton.svg" alt="" width="123" data-align="inline"></a>
+<a href="https://github.com/AzuraCorp/AzuraLang/wiki"><img title="" src="./assets/AzuraLangWikiButton.svg" alt="" width="123" data-align="inline"></a>
+<a href="https://github.com/AzuraCorp/AzuraLang/pulls"><img title="" src="./assets/AzuraLangPullRequestsButton.svg" alt="" width="123" data-align="inline"></a>
+<a href="https://github.com/AzuraCorp/AzuraLang/deployments"><img title="" src="./assets/AzuraLangDeploymentsButton.svg" alt="" width="123" data-align="inline"></a>
+<a href="https://github.com/AzuraCorp/AzuraLang?tab=LGPL-3.0-1-ov-file"><img title="" src="./assets/AzuraLangLicenseButton.svg" alt="" width="123" data-align="inline"></a>
+<a href="https://github.com/AzuraCorp/AzuraLang/graphs/contributors"><img title="" src="./assets/AzuraLangContributorsButton.svg" alt="" width="123" data-align="inline"></a>
 ## What is AzuraLang?
 
 AzuraLang is a python-library/toolkit to easily make Python-based apps using tTk¹.
 
-> ¹tTk = themed Tkinter, a python library to make better looking/themed tkinter windows/apps.
+> ¹tTk = themed Tkinter, a Python library to make better looking/themed tkinter windows/apps.
 
 It is a high-level library, that is really easy to use, mod and contribute.
 
@@ -28,7 +33,7 @@ pip install AzuraLang
 pip install AzuraLang --break-system-packages
 ```
 
-### ADaC Channel(AllDistributions and Commits channel)
+### ADC Channel(AllDistributions and Commits channel)
 
 > [!NOTE]
 > This way you'll get all the new features asap, but some distribution/versions/commits have bugs or aren't stable to    use normally - so be careful!
