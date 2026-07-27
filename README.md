@@ -6,9 +6,9 @@
 <a href="https://github.com/AzuraCorp/AzuraLang/releases"><img title="" src="./assets/AzuraLangReleasesButton.svg" alt="" width="123" data-align="inline"></a>
 <a href="https://github.com/AzuraCorp/AzuraLang/wiki"><img title="" src="./assets/AzuraLangWikiButton.svg" alt="" width="123" data-align="inline"></a>
 <a href="https://github.com/AzuraCorp/AzuraLang/pulls"><img title="" src="./assets/AzuraLangPullRequestsButton.svg" alt="" width="123" data-align="inline"></a>
-<!--<a href="https://github.com/AzuraCorp/AzuraLang/deployments"><img title="" src="./assets/AzuraLangDeploymentsButton.svg" alt="" width="123" data-align="inline"></a>-->
 <a href="https://github.com/AzuraCorp/AzuraLang?tab=LGPL-3.0-1-ov-file"><img title="" src="./assets/AzuraLangLicenseButton.svg" alt="" width="123" data-align="inline"></a>
 <a href="https://github.com/AzuraCorp/AzuraLang/graphs/contributors"><img title="" src="./assets/AzuraLangContributorsButton.svg" alt="" width="123" data-align="inline"></a>
+<!--<a href="https://github.com/AzuraCorp/AzuraLang/deployments"><img title="" src="./assets/AzuraLangDeploymentsButton.svg" alt="" width="123" data-align="inline"></a>-->
 ## What is AzuraLang?
 
 AzuraLang is a python-library/toolkit to easily make Python-based apps using tTk¹.
