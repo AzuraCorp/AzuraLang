@@ -1,41 +1,39 @@
-import sys
-import os
-import traceback
-import tkinter as tk
-from tkinter import ttk  # Standard native engine components
-from tkinter import filedialog, colorchooser
-from tkinterweb import HtmlFrame
-from colorama import Fore, Style
-import colorama
-import inspect
 import colorsys
+import inspect
+import subprocess
+import os
+from os import system
+import sys
+import tkinter as tk
+from tkinter import filedialog
+from tkinter import ttk
+from tkinter import font
+import colorama
+from colorama import Fore, Style
 
 colorama.init(autoreset=True)
+orangeColorForPrint = "\033[38;5;208m"
 
-# Global framework window registry mapping
+window_blueprints = {}
 windows = {}
 
-# Master theme configuration mapping for raw tk widgets and window backdrops
 _THEME = {
     "win_bg": "#f5f6f7",     # Default flat light grey canvas style
     "label_fg": "#333333",   # Dark charcoal text
+    "label_bg": "#f5f6f7",
     "entry_bg": "#ffffff",   # Solid white text cells
     "entry_fg": "#333333",
     "btn_bg": "#e1e1e1",     # Soft grey interactive buttons
     "btn_fg": "#000000"
 }
 
-def get_line_number():
-    # .f_back gets the frame of the caller who called this function
-    caller_frame = inspect.currentframe().f_back
-    return caller_frame.f_lineno
-
 def useDarkMode():
     """Modifies structural theme maps and applies custom native styles for dark mode."""
     global _THEME
     _THEME["win_bg"] = "#2b2b2b"    # Charcoal theme background canvas
     _THEME["label_fg"] = "#ffffff"  # High-contrast text
-    _THEME["entry_bg"] = "#3c3c3c"  # Dark gray input slots
+    _THEME["label_bg"] = "#2b2b2b"
+    _THEME["entry_bg"] = "#3c3c3c"  # Dark grey input slots
     _THEME["entry_fg"] = "#ffffff"
     _THEME["btn_bg"] = "#4a4a4a"    # Dark interactive buttons
     _THEME["btn_fg"] = "#ffffff"
@@ -47,13 +45,54 @@ def useDarkMode():
     style.configure('TLabel', background="#2b2b2b", foreground="#ffffff")
     style.configure('TButton', background="#4a4a4a", foreground="#ffffff")
 
-def reporterror(code="err.code", message="Test report! No errors found.", er_line={get_line_number()}, err_type="Test/Enviermont Error"):
-    print(f"{Style.BRIGHT}{Fore.CYAN}AzuraLang(GUI) Log:")
-    print(f"{Style.BRIGHT}{Fore.RED}An error has acured at line {er_line}. Code: {code}")
-    print(f"{Style.BRIGHT}{Fore.RED}{err_type} => {message}")
-    print(f"{Style.BRIGHT}\033[38;5;208mThis error is a dev-error, it's indeed fixable. If not, please file an issue at:\nhttps://github.com/AzuraCorp/AzuraLang/issues")
-    print(f"{Style.RESET_ALL}")
-    sys.exit(1)
+def reporterror(code="err.code", message="Test report! No errors found.", er_line: str | int = "!not detected", err_type="Test/Envierment Error"):
+    if code == "0x00":
+        print(f"{Style.BRIGHT}{Fore.CYAN}==AzuraLang Log==")
+        print(f"{Style.BRIGHT}{Fore.RED}An error has occured at line {er_line}.")
+        print(f"{Style.BRIGHT}{Fore.RED}[{code}]RuntimeError: {Style.NORMAL}{message}")
+        print(f"{orangeColorForPrint}This error is a dev-error, it's indeed fixable. If not, please file an issue at:\nhttps://github.com/AzuraCorp/AzuraLang/issues")
+        print(f"{Style.RESET_ALL}")
+        sys.exit(1)
+    elif code == "0x01":
+        print(f"{Style.BRIGHT}{Fore.CYAN}==AzuraLang Log==")
+        print(f"{Style.BRIGHT}{Fore.RED}An error has occured at line {er_line}.")
+        print(f"{Style.BRIGHT}{Fore.RED}[{code}]WindowLookupError: {Style.NORMAL}{message}")
+        print(f"{orangeColorForPrint}This error is a dev-error, it's indeed fixable. If not, please file an issue at:\nhttps://github.com/AzuraCorp/AzuraLang/issues")
+        print(f"{Style.RESET_ALL}")
+        sys.exit(1)
+    elif code == "0x02":
+        print(f"{Style.BRIGHT}{Fore.CYAN}==AzuraLang Log==")
+        print(f"{Style.BRIGHT}{Fore.RED}An error has occured at line {er_line}.")
+        print(f"{Style.BRIGHT}{Fore.RED}[{code}]NameError: {Style.NORMAL}{message}")
+        print(f"{orangeColorForPrint}This error is a dev-error, it's indeed fixable. If not, please file an issue at:\nhttps://github.com/AzuraCorp/AzuraLang/issues")
+        print(f"{Style.RESET_ALL}")
+        sys.exit(1)
+    elif code == "0x03":
+        print(f"{Style.BRIGHT}{Fore.CYAN}==AzuraLang Log==")
+        print(f"{Style.BRIGHT}{Fore.RED}An error has occured at line {er_line}.")
+        print(f"{Style.BRIGHT}{Fore.RED}[{code}]AtrributeValueNameError: {Style.NORMAL}{message}")
+        print(f"{orangeColorForPrint}This error is a dev-error, it's indeed fixable. If not, please file an issue at:\nhttps://github.com/AzuraCorp/AzuraLang/issues")
+        print(f"{Style.RESET_ALL}")
+        sys.exit(1)
+    elif code == "0x04":
+        print(f"{Style.BRIGHT}{Fore.CYAN}==AzuraLang Log==")
+        print(f"{Style.BRIGHT}{Fore.RED}An error has occured at line {er_line}.")
+        print(f"{Style.BRIGHT}{Fore.RED}[{code}]NamespaceError: {Style.NORMAL}{message}")
+        print(f"{orangeColorForPrint}This error is a dev-error, it's indeed fixable. If not, please file an issue at:\nhttps://github.com/AzuraCorp/AzuraLang/issues")
+        print(f"{Style.RESET_ALL}")
+        sys.exit(1)
+    else:
+        print(f"{Style.BRIGHT}{Fore.CYAN}==AzuraLang Log==")
+        print(f"{Style.BRIGHT}{Fore.RED}An error has occured at line"+er_line)
+        print(f"{Style.BRIGHT}{Fore.RED}[{code}]{err_type}: {message}")
+        print(f"{orangeColorForPrint}This error is a dev-error, it's indeed fixable. If not, please file an issue at:\nhttps://github.com/AzuraCorp/AzuraLang/issues")
+        print(f"{Style.RESET_ALL}")
+        sys.exit(1)
+
+def get_line_number():
+    # .f_back gets the frame of the caller who called this function
+    caller_frame = inspect.currentframe().f_back
+    return caller_frame.f_lineno
 
 
 def azura_exception_handler(exctype, value, tb):
@@ -68,22 +107,54 @@ def azura_exception_handler(exctype, value, tb):
         reporterror(
             code="0x02",
             message=error_message,
-            er_line={get_line_number()},
-            err_type="Name / Reference Error"
+            er_line={line_number},
+            err_type="NameError"
         )
     else:
         # Pass non-NameErrors directly to standard Python crash handler tools
         sys.__excepthook__(exctype, value, tb)
-
 # Assign our global error shield interceptor mapping directly to Python system core
 sys.excepthook = azura_exception_handler
 
-def window(Name, title="Window", size="400x300"):
+def registerWindow(name, builder_func):
+    """Registers a function that builds the window."""
+    window_blueprints[name] = builder_func
+
+def openWindow(name):
+    """Opens a window, creating it if it was destroyed."""
+    # Check if it exists and is a valid Tkinter widget
+    if name in windows and windows[name].winfo_exists():
+        windows[name].deiconify()
+        windows[name].lift() # Optional: Bring to front
+    else:
+        # If it doesn't exist (never created or destroyed), run the blueprint
+        if name in window_blueprints:
+            print(f"Creating fresh instance of '{name}'...")
+            windows[name] = window_blueprints[name]()
+        else:
+            print(f"Error: No blueprint found for '{name}'")
+
+# noinspection PyPep8Naming
+def window(Name, title="Window", size="400x300", icon=None, silentFail=False):
     """Creates a base window instance utilizing standard Tkinter windows as containers."""
     win = tk.Tk()  # Replaced legacy ThemedTk reference
     win.title(title)
     win.geometry(size)
     win.configure(bg=_THEME["win_bg"])
+
+    if icon:
+        try:
+            # For Windows .ico files
+            win.iconbitmap(icon)
+        except Exception:
+            # Fallback for other formats (like .png) on other platforms
+            try:
+                icon_img = tk.PhotoImage(file=icon)
+                win.iconphoto(True, icon_img)
+            except Exception as e:
+                print(f"Could not load icon: {e}")
+                if not silentFail:
+                    reporterror(code="0x03", message=f"File \"{icon}\" not found! Maybe you forgot to add \"./\" at the start?")
 
     # Initialize basic native TTK layout styles for default setups
     style = ttk.Style(win)
@@ -100,29 +171,20 @@ def label(inWinName, text="label", **kwargs):
     """Renders a standard clean layout tracking system text inside TTK."""
     parent = windows.get(inWinName)
 
-    fg = kwargs.pop('foreground', kwargs.pop('fg', None))
-    bg = kwargs.pop('background', kwargs.pop('bg', None))
-
-    style_name = kwargs.pop('style', None)
-
-    if fg or bg:
-        style = ttk.Style()
-        if not style_name:
-            style_name = f"Custom_{id(parent)}.TLabel"
-
-        style.configure(style_name,
-                        foreground=fg if fg else 'black',
-                        background=bg if bg else 'white')
-
-    if style_name:
-        kwargs['style'] = style_name
-
     if parent:
-        lbl = ttk.Label(parent, text=text, **kwargs)  # Native TTK element mapping
+        # Check if user provided custom colors, otherwise use the theme defaults
+        if 'bg' not in kwargs and 'background' not in kwargs:
+            kwargs['bg'] = _THEME["label_bg"]
+        if 'fg' not in kwargs and 'foreground' not in kwargs:
+            kwargs['fg'] = _THEME["label_fg"]
+
+        lbl = tk.Label(parent, text=text, **kwargs)
         lbl.pack(pady=5)
         return lbl
     else:
         reporterror(code="0x01", message=f"Window '{inWinName}' not found!", er_line={get_line_number()}, err_type="Window Lookup Error")
+        return None
+
 
 def button(inWinName, text="button", command=lambda: print('Hello, World!')):
     """Renders an interactive system action button using TTK styling structures."""
@@ -133,6 +195,7 @@ def button(inWinName, text="button", command=lambda: print('Hello, World!')):
         return btn
     else:
         reporterror(code="0x01", message=f"Window '{inWinName}' not found!", er_line={get_line_number()}, err_type="Window Lookup Error")
+        return None
 
 class AzuraColorPicker(tk.Toplevel):
     """Modern color picker modal defaulting to HSV with switchable RGB support."""
@@ -170,7 +233,7 @@ class AzuraColorPicker(tk.Toplevel):
         self._build_ui()
         self._parse_hex_and_update(self.current_hex)
 
-        # Center relative to parent
+        # Centre relative to parent
         self.geometry(f"+{parent.winfo_rootx() + 40}+{parent.winfo_rooty() + 40}")
 
         # Halt execution until user accepts or cancels
@@ -303,7 +366,7 @@ class AzuraColorPicker(tk.Toplevel):
         # 4. Unlock the listener
         self.is_syncing = False
 
-    def _on_slider_change(self, *args):
+    def _on_slider_change(self):
         # Prevent infinite loops when the script updates the sliders programmatically
         if getattr(self, 'is_syncing', False):
             return
@@ -347,7 +410,7 @@ class AzuraColorPicker(tk.Toplevel):
             except ValueError:
                 pass
 
-    def _on_hex_entry(self, event):
+    def _on_hex_entry(self):
         self._parse_hex_and_update(self.hex_var.get())
 
     def _select_preset(self, hex_code):
@@ -358,7 +421,7 @@ class AzuraColorPicker(tk.Toplevel):
         self.selected_color = self.current_hex
         self.destroy()
 
-def guiInput(inWinName, text="", input_type="TextString", select_mode="file", initial_color="#000000"):
+def guiInput(inWinName, text="", inputType="textString", selectMode="file", initialColor="#000000"):
     """Returns a pure raw tk.Frame containing manually colored widgets to allow flat custom sizing."""
     parent = windows.get(inWinName)
     if not parent:
@@ -375,7 +438,7 @@ def guiInput(inWinName, text="", input_type="TextString", select_mode="file", in
         lbl.pack(side="left", padx=5)
 
     # Normalize input_type to avoid case-sensitivity bugs (e.g., "Select" vs "select")
-    input_type_lower = input_type.lower()
+    input_type_lower = inputType.lower()
 
     # 3. Handle specific Input Type rendering layouts manually
     if input_type_lower == "textstring":
@@ -420,15 +483,15 @@ def guiInput(inWinName, text="", input_type="TextString", select_mode="file", in
         value_label.pack(side="left", padx=5, expand=True, fill="x")
 
         def handle_selection():
-            if select_mode == "file":
+            if selectMode == "file":
                 filepath = filedialog.asksaveasfilename(title="Save As / Select File Location")
                 if filepath:
                     frame.stored_value = filepath
                     value_label.config(text=os.path.basename(filepath))
 
-            elif select_mode == "color":
+            elif selectMode == "color":
                 # Create the picker window instance
-                picker_window = AzuraColorPicker(parent, initial_color=initial_color)
+                picker_window = AzuraColorPicker(parent, initial_color=initialColor)
 
                 # Fetch the selected_color property AFTER the window closes
                 hex_color = picker_window.selected_color
@@ -437,7 +500,7 @@ def guiInput(inWinName, text="", input_type="TextString", select_mode="file", in
                     frame.stored_value = hex_color
                     value_label.config(text=hex_color)
 
-        button_title = f"Choose {select_mode.capitalize()}"
+        button_title = f"Choose {selectMode.capitalize()}"
         btn = tk.Button(
             frame,
             text=button_title,
@@ -451,38 +514,28 @@ def guiInput(inWinName, text="", input_type="TextString", select_mode="file", in
 
         frame.get = lambda: frame.stored_value
 
+    else:
+        reporterror(code="0x03", message=f"guiInput's attribute \"inputType\" doesn't have the value \"{inputType}\"!", err_type="AtrributeValueNameError")
     return frame
 
 
 
 '''=====SEPARATE HERE, END!!!====='''
 
-def run():
-    """Starts the application window loop sequence."""
-    if windows:
-        list(windows.values())[0].mainloop()
+def run(main_window_name):
+    if main_window_name and main_window_name in windows:
+        windows[main_window_name].mainloop()
     else:
-        reporterror(code="0x00", message="No active window instances exist to execute!", er_line={get_line_number()}, err_type="Runtime Error")
+        print("Error: No valid main window specified for run().")
+        reporterror(code="0x01", message=f"Window '{main_window_name}' not found!", er_line={get_line_number()})
 
 if __name__ == "__main__":
     args = sys.argv[1:]
 
     # Pre-flight environment verify checks
     if "run" not in globals() or not callable(globals()["run"]):
-        reporterror(code="0x04", message="The core run() loop execution system is missing!", er_line={get_line_number()}, err_type="Namespace Error")
-        sys.exit(1)
+        reporterror(code="0x04", message="The core run() loop execution system is missing!", er_line={get_line_number()}, err_type="NamespaceError")
 
     # Local diagnostic argument checking
     if "-t" in args or "--test" in args:
-        useDarkMode()  # Test global dark layout setups seamlessly
-
-        window("main_canvas", title="Azura Lang Native Environment Test", size="500x400")
-        label("main_canvas", text="Testing System-Native UI Elements (TTK)")
-
-        # Elements processed cleanly through the custom pure tk design mapping parameters
-        guiInput("main_canvas", text="Input Command String:", input_type="TextString")
-        io = guiInput("main_canvas", text="Target Compilation Directory:", input_type="Select", select_mode="file")
-
-        button("main_canvas", text="Confirm Workspace Launch", command=lambda: print("Framework Engine Diagnostic Check Clear."))
-
-    run()
+        subprocess.run("sh ./tests/test.sh", shell=True)
