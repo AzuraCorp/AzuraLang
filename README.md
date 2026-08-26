@@ -27,7 +27,7 @@ pip install AzuraLang
 
 ### Unstable/Beta releases
 
-To get all the versions check out our wiki page  with the installation guide on _all_ systems.
+To get all the versions check out our wiki page  with the installation guide on _all_<sup>*</sup> systems.
 
 ## Wanna join/help?
 
