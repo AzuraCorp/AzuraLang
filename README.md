@@ -34,5 +34,5 @@ To get all the versions check out our wiki page  with the installation guide on 
 ##### If you want to join/help me, write us an e-mail to 'azuracorp@duck.com' to    get our attention.
 
 
-**Notes:**
-<sup>*1</sup>All supported systems(currently supported Arch-, Mint-/Ubuntu-/Debian-, Fedora- linux; Windows, MacOS/OS-X with pip/python installed)
+**Notes:**       
+<sup>*1</sup>All supported systems, currently supported Arch-, Mint-/Ubuntu-/Debian-, Fedora- linux(building & pip); Windows, MacOS/OS-X(pip)       
