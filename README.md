@@ -27,8 +27,12 @@ pip install AzuraLang
 
 ### Unstable/Beta releases
 
-To get all the versions check out our wiki page  with the installation guide on _all<sup>*</sup>_ systems.
+To get all the versions check out our wiki page  with the installation guide on _all<sup>*1</sup>_ systems.
 
 ## Wanna join/help?
 
 ##### If you want to join/help me, write us an e-mail to 'azuracorp@duck.com' to    get our attention.
+
+
+**Notes:**
+<sup>*1</sup>All supported systems(currently supported Arch-, Mint-/Ubuntu-/Debian-, Fedora- linux; Windows, MacOS/OS-X with pip/python installed)
