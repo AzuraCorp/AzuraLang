@@ -469,7 +469,7 @@ def guiInput(inWinName, text="", inputType="textString", selectMode="file", init
         widget.pack(side="right", expand=True, fill="x", padx=5)
         frame.get = lambda: widget.get("1.0", "end").strip()
 
-    elif input_type_lower == "select":
+    elif input_type_lower == "selector":
         frame.stored_value = ""
         value_label = tk.Label(
             frame,
