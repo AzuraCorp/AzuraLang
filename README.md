@@ -11,13 +11,8 @@
 <!--<a href="https://github.com/AzuraCorp/AzuraLang/deployments"><img title="" src="./assets/AzuraLangDeploymentsButton.svg" alt="" width="123" data-align="inline"></a>-->
 ## What is AzuraLang?
 
-AzuraLang is a python-library/toolkit to easily make Python-based apps using tTk¹.
-
-> ¹tTk = themed Tkinter, a Python library to make better looking/themed tkinter windows/apps.
-
-It is a high-level library, that is really easy to use, mod and contribute.
-
-## Installation
+AzuraLang is a python-library/toolkit to easily make Python-based apps using tTk<sup>*1</sup>.
+This is a high-level library, that is really easy to use, mod and contribute.## Installation
 
 ### Stable releases:
 
@@ -27,12 +22,16 @@ pip install AzuraLang
 
 ### Unstable/Beta releases
 
-To get all the versions check out our wiki page  with the installation guide on _all<sup>*1</sup>_ systems.
+To get all the versions check out our wiki page  with the installation guide on _all<sup>*2</sup>_ systems.
 
+<!-- ## Screenshots -->
+
+<!--================FOOTNOTE===============-->
 ## Wanna join/help?
 
 ##### If you want to join/help me, write us an e-mail to 'azuracorp@duck.com' to    get our attention.
 
 
-**Notes:**       
-<sup>*1</sup>All supported systems, currently supported Arch-, Mint-/Ubuntu-/Debian-, Fedora- linux(building & pip); Windows, MacOS/OS-X(pip)       
+**Notes:**
+<sup>*1</sup>tTk = themed Tkinter, a Python library to make better looking/themed tkinter windows/apps.    
+<sup>*2</sup>All supported systems, currently supported Arch-, Mint-/Ubuntu-/Debian-, Fedora- linux(building & pip); Windows, MacOS/OS-X(pip)    

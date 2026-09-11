@@ -5,7 +5,9 @@ wn = azl.window("root", size="500x400")
 fntslct = azl.guiInput("root", inputType="textString", text="Type fontname e.g. Calibri") # Singleline input
 fntsz = azl.guiInput("root", inputType="textString", text="Type text size e.g. 12") # "" ""
 txt = azl.guiInput("root", inputType="textBox", text="What should the label say?") ## Multiline input
+labelwarn = azl.label("root", text="If you don't type anything in the top label, \nthe attributed label would disappear!", fg="red")
 lbal = azl.label("root", text="A quick brown fox jumps over a lazy dog.")
+# txt.insert(0, "A quick brown fox jumps over a lazy dog.")
 
 def raer(fonttype, size, text): # A function to change the label
     lbal.config(font=(fonttype, size), text=text)
