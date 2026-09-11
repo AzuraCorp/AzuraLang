@@ -8,6 +8,7 @@ __pycache__/
 
 # Random shit
 .idea
+.directory
 
 # Distribution / packaging
 .Python
